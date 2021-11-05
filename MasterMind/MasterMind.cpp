@@ -400,10 +400,10 @@ int main()
                 break;
             }
         }
-        if (game.tries < 10) {
-            KCon::write("Ganaste!");
+        if (game.tries <= 10) {
+            KCon::write("Ganaste!", KCon::Color::YELLOW);
         } else {
-            KCon::write("Perdiste...");
+            KCon::write("Perdiste...", KCon::Color::RED);
         }
 
         KCon::write("Quieres intentarlo otra vez? [y/n]");
