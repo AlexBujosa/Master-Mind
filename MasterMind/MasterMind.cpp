@@ -392,15 +392,14 @@ int main()
         Game game = newGame(usrinCombinations, usrinMaxNumber, usrRepeatNumber);
 
         KCon::write("Combinacion Generada. Ingrese sus entradas:");
-        while (game.tries < 10) {
+        bool victory = false;
+        while ((game.tries < 10) && !victory) {
             vector<int> attempt = getUserComb(usrinCombinations, game.maxNumber, game.tries);
             vector<Answer> hints = attemptAtGame(&game, attempt);
             renderAnsGrid(hints, attempt, game.tries-1);
-            if (isWin(hints)) {
-                break;
-            }
+            victory = isWin(hints);
         }
-        if (game.tries <= 10) {
+        if (victory) {
             KCon::write("Ganaste!", KCon::Color::YELLOW);
         } else {
             KCon::write("Perdiste...", KCon::Color::RED);
