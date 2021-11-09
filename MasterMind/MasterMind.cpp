@@ -1,6 +1,6 @@
 // MasterMind.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-// Comentario Kawaii
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -94,7 +94,25 @@ vector<Answer> attemptAtGame(Game* game, vector<int> combination) {
     game->tries += 1;
     return answers;
 }
-
+int  asignNumberMax(int usrinCombinations, bool usrRepeatNumber) {
+    int usrinMaxNumber;
+    KCon::write("Cual es el numero mas grande?");
+    while (true) {
+        try {
+            usrinMaxNumber = KCon::readInt();
+            if (!usrRepeatNumber && (usrinCombinations > usrinMaxNumber)) {
+                KCon::write("Si no se repiten numeros no pueden haber mas combinaciones que numeros", KCon::Color::RED);
+            }
+            else
+                KCon::clear();
+            break;
+        }
+        catch (std::invalid_argument e) {
+            KCon::write("Ecriba un numero de velda >:(", KCon::Color::RED);
+        }
+    }
+    return usrinMaxNumber;
+}
 int rand(int min, int max) {
     return min + rand() % max;
 }
@@ -104,9 +122,8 @@ int rand(int max) {
 }
 
 vector<int> generateNumArray(int combinationSize, int maxNumber, bool repeat = false) {
-    if (!repeat && (combinationSize > maxNumber)) {
-        throw  std::invalid_argument("No puedes tener mas combinaciones que numeros");
-    }
+
+
     vector<int> baseList;
     if (repeat) {
         for (int i = 0; i < combinationSize; i++)
@@ -131,6 +148,14 @@ vector<int> generateNumArray(int combinationSize, int maxNumber, bool repeat = f
 }
 
 Game newGame(int combinations, int newGameMaxNumber, bool usrRepeatNumber) {
+    // cambio nuevo
+    while (combinations > newGameMaxNumber) {
+        KCon::clear();
+        if (!usrRepeatNumber && (combinations > newGameMaxNumber)) {
+            std::invalid_argument("Rapa tu cama tu no puede tener mas combinaciones que numeros");
+        }
+        newGameMaxNumber = asignNumberMax(combinations, usrRepeatNumber);
+    }
     Game newGame = Game();
     newGame.maxNumber = newGameMaxNumber;
     newGame.requiredCombination = generateNumArray(combinations, newGameMaxNumber, usrRepeatNumber);
@@ -176,7 +201,7 @@ void renderCombGrid(vector<int> combs, int selected, int tryno) {
                     KCon::write(' ', "<" + paddedNumber(combs[i] + 1, 5) + ">", KCon::Color::BLACK, KCon::Color::GREEN);
                 }
                 else {
-                    KCon::write(' ', " " + paddedNumber(combs[i]+1, 5) + " ");
+                    KCon::write(' ', " " + paddedNumber(combs[i] + 1, 5) + " ");
                 }
                 break;
             case 2:
@@ -222,7 +247,7 @@ void renderAnsGrid(vector<Answer> hints, vector<int> prev, int tryno) {
                 KCon::write(' ', " " + padded(hint, 5) + " ", color);
                 break;
             case 1:
-                KCon::write(' ', " " + paddedNumber(prev[i]+1, 5) + " ", color);
+                KCon::write(' ', " " + paddedNumber(prev[i] + 1, 5) + " ", color);
                 break;
             case 2:
                 KCon::write(' ', " " + padded(" ", 5) + " ");
@@ -232,11 +257,12 @@ void renderAnsGrid(vector<Answer> hints, vector<int> prev, int tryno) {
     }
 }
 
-void beepTone(int tone, int duration=100, bool th = true) {
+void beepTone(int tone, int duration = 100, bool th = true) {
     if (th) {
         std::thread t1(beepTone, tone, duration, false);
         t1.detach();
-    } else {
+    }
+    else {
         float freq;
         switch (tone % 12) // First Octave frequencies
         {
@@ -285,7 +311,7 @@ void beepTone(int tone, int duration=100, bool th = true) {
     }
 }
 
-vector<int> getUserComb(int slots, int maxno, int tryno=0) {
+vector<int> getUserComb(int slots, int maxno, int tryno = 0) {
     vector<int> combs;
     for (int i = 0; i < slots; i++)
     {
@@ -337,12 +363,12 @@ string vtos(vector<int> v) {
     return ans;
 }
 
+
 int main()
 {
     srand(time(NULL));
-
+    int usrinCombinations;
     while (true) {
-        int usrinCombinations;
         KCon::write("Cuantas combinaciones?");
         while (true) {
             try {
@@ -372,36 +398,26 @@ int main()
                 KCon::write("Escribe y o n", KCon::Color::RED);
             }
         }
+        // cambie lo que habia aqui de asignar numero maximo y lo puse dentro de la funcion para llamarlo dentro del newGame en el
+        // caso de que usrinCombinations > usrRepeatNumber
+        int usrinMaxNumber = asignNumberMax(usrinCombinations, usrRepeatNumber);;
 
-        int usrinMaxNumber;
-        KCon::write("Cual es el numero mas grande?");
-        while (true) {
-            try {
-                usrinMaxNumber = KCon::readInt();
-                if (!usrRepeatNumber && (usrinCombinations > usrinMaxNumber)) {
-                    KCon::write("Si no se repiten numeros no pueden haber mas combinaciones que numeros", KCon::Color::RED);
-                } else
-                    KCon::clear();
-                    break;
-            }
-            catch (std::invalid_argument e) {
-                KCon::write("Ecriba un numero de velda >:(", KCon::Color::RED);
-            }
-        }
 
         Game game = newGame(usrinCombinations, usrinMaxNumber, usrRepeatNumber);
 
         KCon::write("Combinacion Generada. Ingrese sus entradas:");
-        bool victory = false;
-        while ((game.tries < 10) && !victory) {
+        while (game.tries < 10) {
             vector<int> attempt = getUserComb(usrinCombinations, game.maxNumber, game.tries);
             vector<Answer> hints = attemptAtGame(&game, attempt);
-            renderAnsGrid(hints, attempt, game.tries-1);
-            victory = isWin(hints);
+            renderAnsGrid(hints, attempt, game.tries - 1);
+            if (isWin(hints)) {
+                break;
+            }
         }
-        if (victory) {
+        if (game.tries <= 10) {
             KCon::write("Ganaste!", KCon::Color::YELLOW);
-        } else {
+        }
+        else {
             KCon::write("Perdiste...", KCon::Color::RED);
         }
 
