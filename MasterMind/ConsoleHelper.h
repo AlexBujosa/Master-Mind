@@ -113,13 +113,10 @@ namespace KCon
         if (in == 'y') {
             return true;
         }
-        else if (in == 'n') {
-            return false;
+        if (in == 'n') {
+	        return false;
         }
-        else {
-            throw invalid_argument("User didn't write y or n");
-        }
-        return false;
+        throw invalid_argument("User didn't write y or n");
     }
 
     void clear() {

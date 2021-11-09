@@ -586,18 +586,22 @@ int main()
         }
 
         KCon::write("Quieres intentarlo otra vez? [y/n]");
+        
         while (true) {
             try {
                 usrRepeatNumber = KCon::readYN();
                 KCon::clear();
                 break;
+
             }
             catch (std::invalid_argument e) {
+                
                 generateRandomComment(creativeGrudge);
                 KCon::write("Escribe y o n", KCon::Color::RED);
             }
+            
         }
-        if (usrRepeatNumber) {
+        if (!usrRepeatNumber) {
             break;
         }
     }
