@@ -1,6 +1,6 @@
 // MasterMind.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-
+// Comentario Kawaii
 #include <iostream>
 #include <string>
 #include <vector>
