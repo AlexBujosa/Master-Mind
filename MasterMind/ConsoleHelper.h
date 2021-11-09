@@ -87,7 +87,7 @@ namespace KCon
 
     float readFloat() {
         string in = readText();
-        return std::stof(in);
+        return stof(in);
     }
 
     char asciitolower(char in) {
@@ -117,7 +117,7 @@ namespace KCon
             return false;
         }
         else {
-            throw std::invalid_argument("User didn't write y or N");
+            throw invalid_argument("User didn't write y or n");
         }
         return false;
     }
