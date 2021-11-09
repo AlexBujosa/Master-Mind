@@ -105,7 +105,7 @@ int rand(int max) {
 
 vector<int> generateNumArray(int combinationSize, int maxNumber, bool repeat = false) {
     if (!repeat && (combinationSize > maxNumber)) {
-        throw  std::invalid_argument("Rapa tu cama tu no puede tener mas combinaciones que numeros");
+        throw  std::invalid_argument("No puedes tener mas combinaciones que numeros");
     }
     vector<int> baseList;
     if (repeat) {
