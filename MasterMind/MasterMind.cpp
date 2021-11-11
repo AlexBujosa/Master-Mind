@@ -585,8 +585,9 @@ int main()
             renderAnsGrid(hints, attempt, game.tries - 1);
             victory = isWin(hints);
         }
+        float maxScore = 100.0 * usrinFields * usrinBigNumber * (usrRepeatNumber ? usrinBigNumber : 1) / usrinTries;
         if (victory) {
-            KCon::write("Ganaste!", KCon::Color::YELLOW);
+            KCon::write("Ganaste! - Puntaje: " + std::to_string((maxScore / game.tries)), KCon::Color::YELLOW);
         }
         else {
             KCon::write("Perdiste...", KCon::Color::RED);
