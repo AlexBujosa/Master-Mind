@@ -1,3 +1,4 @@
+// MasterMind.cpp
 // Juego de MasterMind
 // Creador: 
 //             Jerry Rivas 1089317
@@ -5,6 +6,7 @@
 //             Sebastian Henriquez 1101507
 //             Ismael Dicent 1100368
 //             Alex Bujosa 1098913
+// Realizar un programa de C++ que replique el juego de Master Mind
 
 #include <iostream>
 #include <string>
