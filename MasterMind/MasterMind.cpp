@@ -1,5 +1,10 @@
-// MasterMind.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+// Juego de MasterMind
+// Creador: 
+//             Jerry Rivas 1089317
+// Equipo:
+//             Sebastian Henriquez 1101507
+//             Ismael Dicent 1100368
+//             Alex Bujosa 1098913
 
 #include <iostream>
 #include <string>
