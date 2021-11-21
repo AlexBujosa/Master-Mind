@@ -508,6 +508,7 @@ int main()
     creativeGrudge.push_back("Estrellitas donde estan?");
     creativeGrudge.push_back("RUGE EL LEOOOOOONNNNNNNN");
     creativeGrudge.push_back("Hace falta Trujillo por aqui");
+    creativeGrudge.push_back("Se va armar un lio");
 
     srand(time(NULL));
     while (true) {
