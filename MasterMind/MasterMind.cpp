@@ -509,6 +509,9 @@ int main()
     creativeGrudge.push_back("RUGE EL LEOOOOOONNNNNNNN");
     creativeGrudge.push_back("Hace falta Trujillo por aqui");
     creativeGrudge.push_back("Se va armar un lio");
+    creativeGrudge.push_back("Deja el relajo");
+    creativeGrudge.push_back("Ya ta bueno");
+    creativeGrudge.push_back("El programa explotara");
 
     srand(time(NULL));
     while (true) {
