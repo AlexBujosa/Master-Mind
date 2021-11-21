@@ -511,7 +511,7 @@ int main()
     creativeGrudge.push_back("Se va armar un lio");
     creativeGrudge.push_back("Deja el relajo");
     creativeGrudge.push_back("Ya ta bueno");
-    creativeGrudge.push_back("El programa explotara");
+    creativeGrudge.push_back("El programa explotara"); //No era necesario
 
     srand(time(NULL));
     while (true) {
